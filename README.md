@@ -1,2 +1,7 @@
 # warehouse_api
-API для управления складом: управление товарами, остатками, заказами и поставщиками.
+REST API для управления складом: товары, поставщики, категории, заказы и остатки.  
+- Django + Django REST Framework  
+- PostgreSQL  
+- Redis (кэширование)  
+- Celery (фоновые задачи)  
+- Docker + docker-compose  
