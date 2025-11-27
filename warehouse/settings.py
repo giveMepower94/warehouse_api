@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # add rest_framework
-    'rest_framework'
+    'rest_framework',
 
     # add my apps
     'suppliers',
