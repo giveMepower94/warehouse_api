@@ -4,7 +4,7 @@ services:
   web:
     build: .
     container_name: warehouse_web
-    command: poetry run gunicorn warehouse_api.wsgi:application --bind 0.0.0.0:8000
+    command: poetry run gunicorn warehouse.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
@@ -16,7 +16,7 @@ services:
       - redis
 
   db:
-    image: postgres:15
+    image: postgres:17
     container_name: warehouse_db
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -36,7 +36,7 @@ services:
   celery:
     build: .
     container_name: warehouse_celery
-    command: poetry run celery -A warehouse_api worker --loglevel=INFO
+    command: poetry run celery -A warehouse worker --loglevel=INFO
     volumes:
       - .:/app
     env_file:
@@ -48,7 +48,7 @@ services:
   celery_beat:
     build: .
     container_name: warehouse_celery_beat
-    command: poetry run celery -A warehouse_api beat --loglevel=INFO
+    command: poetry run celery -A warehouse beat --loglevel=INFO
     volumes:
       - .:/app
     env_file:
