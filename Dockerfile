@@ -11,19 +11,27 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="/root/.local/bin:$PATH"
 
+# Отключаем создание виртуального окружения Poetry
+ENV POETRY_VIRTUALENVS_CREATE=false
+ENV POETRY_VIRTUALENVS_IN_PROJECT=false
+
 WORKDIR /app
 
 # Копируем только файлы poetry, чтобы быстрее собирать образ
 COPY pyproject.toml poetry.lock* /app/
 
 # Poetry не создаёт виртуальные окружения
-RUN poetry config virtualenvs.create false
+RUN poetry config virtualenvs.create false \
+ && poetry config virtualenvs.in-project false
 
 # Устанавливаем зависимости
-RUN poetry install --no-interaction --no-ansi
+RUN poetry install --no-root --no-interaction --no-ansi
 
 # Копируем весь проект
 COPY . /app/
+
+# Копируем .env
+COPY .env /app/.env
 
 EXPOSE 8000
 
