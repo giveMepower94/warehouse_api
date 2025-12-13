@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 
     # add my apps
     'suppliers',
-    'customers',
+    'customers.apps.CustomersConfig',
     'categories',
     'products',
     'orders',
