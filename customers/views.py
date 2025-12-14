@@ -5,7 +5,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-
+from .tasks import send_verification_email_task
 from .models import EmailVerificationToken
 
 
@@ -13,6 +13,12 @@ from .models import EmailVerificationToken
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
+
+    def perform_create(self, serializer):
+        # Создаём пользователя
+        user = serializer.save()
+        # Запускаем асинхронную отправку письма подтверждения
+        send_verification_email_task.delay(user.id)
 
 
 class VerifyEmailView(GenericAPIView):

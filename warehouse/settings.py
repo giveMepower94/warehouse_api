@@ -153,4 +153,5 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
 DEFAULT_FROM_EMAIL = 'noreply@warehouse.local'
+FRONTEND_URL = "http://localhost:8000"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
